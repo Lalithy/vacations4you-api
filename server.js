@@ -13,6 +13,8 @@ require("dotenv/config");
 
 app.use(express.json());
 
+/** ------------------------------------------- Create --------------------------------------*/
+
 //create a user
 app.post("/user/save", async (req, res) => {
   try {
@@ -90,13 +92,49 @@ app.post("/package/booking", async (req, res) => {
   }
 });
 
-//DB connection
+/** ------------------------------------------- User --------------------------------------*/
+
+//create a user
+app.post("/user/save", async (req, res) => {
+  try {
+    const user = await User.create(req.body);
+    res.status(200).json(user);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+//get all users
+app.get("/user/all", async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+//get a user by id
+app.get("/user/:id", async (req, res) => {
+  try {
+    const {id} = req.params;
+    const user = await User.findById(id);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+
+//db connection
 mongoose.set("strictQuery", false);
-mongoose.connect(process.env.DB_CONNECTION)
-.then(() => console.log("Connected!")).catch((error) => {
+mongoose
+  .connect(process.env.DB_CONNECTION)
+  .then(() => console.log("Connected!"))
+  .catch((error) => {
     console.log(error);
   });
-
 
 app.listen(process.env.PORT, () => {
   console.log("Vacation4You API is running on port " + process.env.PORT);
