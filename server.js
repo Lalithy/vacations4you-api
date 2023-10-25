@@ -80,6 +80,8 @@ app.post("/package/booking", async (req, res) => {
   }
 });
 
+
+
 /** ------------------------------------------- User --------------------------------------*/
 
 //create a user
@@ -93,6 +95,7 @@ app.post("/user/save", async (req, res) => {
   }
 });
 
+
 //get all users
 app.get("/user/all", async (req, res) => {
   try {
@@ -102,6 +105,7 @@ app.get("/user/all", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
 
 //get a user by id
 app.get("/user/:id", async (req, res) => {
@@ -113,6 +117,7 @@ app.get("/user/:id", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
 
 //update a user by id
 app.put("/user/:id", async (req, res) => {
@@ -131,6 +136,7 @@ app.put("/user/:id", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
 
 //delete a user
 app.delete("/user/:id", async (req, res) => {
