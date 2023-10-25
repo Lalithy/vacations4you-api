@@ -12,6 +12,8 @@ const app = express();
 require("dotenv/config");
 
 app.use(express.json());
+app.use(express.urlencoded({extended: false}))
+
 
 /** ------------------------------------------- Create --------------------------------------*/
 
@@ -118,7 +120,7 @@ app.get("/user/all", async (req, res) => {
 //get a user by id
 app.get("/user/:id", async (req, res) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const user = await User.findById(id);
     res.status(200).json(user);
   } catch (error) {
@@ -126,6 +128,21 @@ app.get("/user/:id", async (req, res) => {
   }
 });
 
+//update a user by id
+app.put("/user/:id", async (req, res) => {
+  try {
+    const {id} = req.params;
+    const user = await User.findByIdAndUpdate(id, req.body);
+    if(!user) {
+      return res.status(404).json({message: 'Can not find any user by id ' + id});
+    }
+
+    const updatedUser = await User.findById(id);
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 //db connection
 mongoose.set("strictQuery", false);
