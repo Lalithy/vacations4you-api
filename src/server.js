@@ -1,15 +1,15 @@
 require("dotenv/config");
 const express = require("express");
 const mongoose = require("mongoose");
+var cors = require("cors");
+
 const userRoute = require("./api/routes/userRoute");
 const cruiseRoute = require("./api/routes/cruiseRoute");
 const cruiseBookingRoute = require("./api/routes/cruiseBookingRoute");
-var cors = require("cors");
-
-const Activity = require("./api/models/activityModel");
-const Package = require("./api/models/packageModel");
-const ActivityBooking = require("./api/models/activityBookingModel");
-const PackageBooking = require("./api/models/packageBookingModel");
+const activityRoute = require("./api/routes/activityRoute");
+const activityBookingRoute = require("./api/routes/activityBookingRoute");
+const packageRoute = require("./api/routes/packageRoute");
+const packageBookingRoute = require("./api/routes/packageBookingRoute");
 
 const app = express();
 
@@ -30,50 +30,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api/user", userRoute);
 app.use("/api/cruise", cruiseRoute);
 app.use("/api/cruise/booking", cruiseBookingRoute);
-
-//create a activity
-app.post("/activity/save", async (req, res) => {
-  try {
-    const activity = await Activity.create(req.body);
-    res.status(200).json(activity);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
-//create a package
-app.post("/package/save", async (req, res) => {
-  try {
-    const package = await Package.create(req.body);
-    res.status(200).json(package);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
-//create a activity booking
-app.post("/activity/booking", async (req, res) => {
-  try {
-    const activityBooking = await ActivityBooking.create(req.body);
-    res.status(200).json(activityBooking);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
-
-//create a package booking
-app.post("/package/booking", async (req, res) => {
-  try {
-    const packageBooking = await PackageBooking.create(req.body);
-    res.status(200).json(packageBooking);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
+app.use("/api/activity", activityRoute);
+app.use("/api/activity/booking", activityBookingRoute);
+app.use("/api/package", packageRoute);
+app.use("/api/package/booking", packageBookingRoute);
 
 //db connection
 mongoose.set("strictQuery", false);
