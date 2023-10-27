@@ -32,5 +32,8 @@ const activityBookingSchema = mongoose.Schema(
   }
 );
 
-const ActivityBooking = mongoose.model("ActivityBooking", activityBookingSchema);
+const ActivityBooking = mongoose.model(
+  "ActivityBooking",
+  activityBookingSchema
+);
 module.exports = ActivityBooking;

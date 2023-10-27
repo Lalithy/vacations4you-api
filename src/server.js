@@ -2,6 +2,7 @@ require("dotenv/config");
 const express = require("express");
 const mongoose = require("mongoose");
 const userRoute = require("./api/routes/userRoute");
+const cruiseRoute = require("./api/routes/cruiseRoute")
 var cors = require('cors')
 
 const User = require("./api/models/userModel");
@@ -29,17 +30,7 @@ app.use(express.urlencoded({ extended: false }))
 
 //routes
 app.use("/api/user", userRoute);
-
-//create a cruise
-app.post("/cruise/save", async (req, res) => {
-  try {
-    const cruise = await Cruise.create(req.body);
-    res.status(200).json(cruise);
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ message: error.message });
-  }
-});
+app.use("/api/cruise", cruiseRoute)
 
 //create a activity
 app.post("/activity/save", async (req, res) => {
