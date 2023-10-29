@@ -26,11 +26,28 @@ const activityBookingSchema = mongoose.Schema(
       type: Date,
       required: true,
     },
+    customer_name:{
+      type: String,
+      required: true,
+    },
+    customer_address:{
+      type: String,
+    },
+    customer_email:{
+      type: String,
+    },
+    customer_phone_no:{
+      type: String,
+      required: true,
+    }
   },
   {
     timestamps: true,
   }
 );
 
-const ActivityBooking = mongoose.model("ActivityBooking", activityBookingSchema);
+const ActivityBooking = mongoose.model(
+  "ActivityBooking",
+  activityBookingSchema
+);
 module.exports = ActivityBooking;
