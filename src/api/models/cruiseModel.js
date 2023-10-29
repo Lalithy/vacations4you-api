@@ -38,6 +38,9 @@ const cruiseSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    meal: {
+      type: String,
+    },
   },
   {
     timestamps: true,
