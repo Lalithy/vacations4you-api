@@ -30,6 +30,38 @@ const getCruiseById = asyncHandler(async (req, res) => {
   }
 });
 
+//get a cruise by id
+const getCruiseBySearchCriteria = asyncHandler(async (req, res) => {
+  try {
+    const deck = req.query.deck;
+    const cabin = req.query.cabin;
+    const departure = req.query.departure;
+    const arrival = req.query.arrival;
+    const departure_date = req.query.departure_date;
+    const arrival_date = req.query.arrival_date;
+
+    const cruise = await Cruise.find({
+      deck: deck,
+      cabin: cabin,
+      departure: departure,
+      arrival: arrival,
+      departure_date: departure_date,
+      arrival_date: arrival_date,
+    });
+
+    if (cruise.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "Can not find any cruise by search criteria" });
+    }
+
+    res.status(200).json(cruise);
+  } catch (error) {
+    res.status(500);
+    throw new Error(error.message);
+  }
+});
+
 //create a cruise
 const createCruise = asyncHandler(async (req, res) => {
   try {
@@ -81,6 +113,7 @@ const removeCruiseById = asyncHandler(async (req, res) => {
 module.exports = {
   getAllCruise,
   getCruiseById,
+  getCruiseBySearchCriteria,
   createCruise,
   updateCruiseById,
   removeCruiseById,
