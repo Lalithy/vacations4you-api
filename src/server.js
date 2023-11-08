@@ -13,7 +13,7 @@ const packageBookingRoute = require("./api/routes/packageBookingRoute");
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 const DB_URL = process.env.DB_URL;
 const FRONTEND_URL = process.env.FRONTEND_URL;
 
@@ -22,7 +22,7 @@ var corsOptions = {
   optionsSuccessStatus: 200,
 };
 
-app.use(cors(corsOptions));
+//app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -37,11 +37,19 @@ app.use("/api/package/booking", packageBookingRoute);
 
 //db connection
 mongoose.set("strictQuery", false);
-mongoose
-  .connect(DB_URL)
-  .then(() => console.log("Connected!"))
-  .catch((error) => {
-    console.log(error);
+// mongoose
+//   .connect(DB_URL)
+//   .then(() => console.log("Connected!"))
+//   .catch((error) => {
+//     console.log(error);
+//   });
+
+  mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log('Connected to MongoDB');
+  })
+  .catch(error => {
+    console.error('Error connecting to MongoDB:', error);
   });
 
 app.listen(PORT, () => {
