@@ -6,27 +6,22 @@ const cruiseBookingSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    cruise_id: {
-      type: Number,
-      required: true,
-    },
-    cabin: {
+    customer_first_name: {
       type: String,
       required: true,
     },
-    deck: {
+    customer_last_name: {
       type: String,
       required: true,
     },
-    price: {
-      type: Number,
+    customer_email: {
+      type: String,
+    },
+    customer_phone_no: {
+      type: String,
       required: true,
     },
-    duration: {
-      type: Number,
-      required: true,
-    },
-    cruise_provider: {
+    meal_preference: {
       type: String,
       required: true,
     },
@@ -34,28 +29,55 @@ const cruiseBookingSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    meal_preference: {
-      type: String,
-      required: true,
-    },
     date: {
-      type: Date,
-      required: true,
-    },
-    customer_name:{
       type: String,
       required: true,
     },
-    customer_address:{
-      type: String,
-    },
-    customer_email:{
-      type: String,
-    },
-    customer_phone_no:{
-      type: String,
-      required: true,
-    }
+
+    number_of_booking: [
+      {
+        cruise_name: {
+          type: String,
+          required: true,
+        },
+        cabin: {
+          type: String,
+          required: true,
+        },
+        deck: {
+          type: String,
+          required: true,
+        },
+        departure: {
+          type: String,
+          required: true,
+        },
+        arrival: {
+          type: String,
+          required: true,
+        },
+        departure_date: {
+          type: String,
+          required: true,
+        },
+        arrival_date: {
+          type: String,
+          required: true,
+        },
+        price: {
+          type: Number,
+          required: true,
+        },
+        duration: {
+          type: Number,
+          required: true,
+        },
+        cruise_provider: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
