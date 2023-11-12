@@ -29,6 +29,22 @@ const cruiseBookingSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    card_number: {
+      type: String,
+      required: true,
+    },
+    expiry_date: {
+      type: String,
+      required: true,
+    },
+    cvv: {
+      type: String,
+      required: true,
+    },
+    name_on_card: {
+      type: String,
+      required: true,
+    },
     date: {
       type: String,
       required: true,
