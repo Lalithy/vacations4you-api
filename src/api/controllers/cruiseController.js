@@ -30,24 +30,32 @@ const getCruiseById = asyncHandler(async (req, res) => {
   }
 });
 
-//get a cruise by id
+// get a cruise by id
 const getCruiseBySearchCriteria = asyncHandler(async (req, res) => {
   try {
-    const deck = req.query.deck;
-    const cabin = req.query.cabin;
-    const departure = req.query.departure;
-    const arrival = req.query.arrival;
-    const departure_date = req.query.departure_date;
-    const arrival_date = req.query.arrival_date;
+    const searchParams = {};
+    const allowedSearchParams = [
+      "deck",
+      "cabin",
+      "departure",
+      "arrival",
+      "departure_date",
+      "arrival_date",
+    ];
 
-    const cruise = await Cruise.find({
-      deck: deck,
-      cabin: cabin,
-      departure: departure,
-      arrival: arrival,
-      departure_date: departure_date,
-      arrival_date: arrival_date,
-    });
+    for (const param of allowedSearchParams) {
+      if (req.query[param]) {
+        searchParams[param] = req.query[param];
+      }
+    }
+
+    if (Object.keys(searchParams).length === 0) {
+      return res
+        .status(400)
+        .json({ message: "Missing valid search parameters" });
+    }
+
+    const cruise = await Cruise.find(searchParams);
 
     if (cruise.length === 0) {
       return res
@@ -57,8 +65,8 @@ const getCruiseBySearchCriteria = asyncHandler(async (req, res) => {
 
     res.status(200).json(cruise);
   } catch (error) {
-    res.status(500);
-    throw new Error(error.message);
+    res.status(500).json({ message: "Internal Server Error" });
+    console.error(error);
   }
 });
 
