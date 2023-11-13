@@ -10,6 +10,7 @@ const activityRoute = require("./api/routes/activityRoute");
 const activityBookingRoute = require("./api/routes/activityBookingRoute");
 const packageRoute = require("./api/routes/packageRoute");
 const packageBookingRoute = require("./api/routes/packageBookingRoute");
+const csvUploadRoute = require("./api/routes/csvUploadRoute");
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use("/api/activity", activityRoute);
 app.use("/api/activity/booking", activityBookingRoute);
 app.use("/api/package", packageRoute);
 app.use("/api/package/booking", packageBookingRoute);
+app.use("/api/package/upload", csvUploadRoute);
 
 //db connection
 mongoose.set("strictQuery", false);
