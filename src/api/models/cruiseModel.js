@@ -2,6 +2,18 @@ const mongoose = require("mongoose");
 
 const cruiseSchema = mongoose.Schema(
   {
+    name: {
+      type: String,
+      required: true,
+    },
+    image_path: {
+      type: String,
+      required: true,
+    },
+    rating: {
+      type: Number,
+      required: true,
+    },
     departure: {
       type: String,
       required: true,
@@ -11,11 +23,11 @@ const cruiseSchema = mongoose.Schema(
       required: true,
     },
     departure_date: {
-      type: Date,
+      type: String,
       required: true,
     },
     arrival_date: {
-      type: Date,
+      type: String,
       required: true,
     },
     cabin: {
