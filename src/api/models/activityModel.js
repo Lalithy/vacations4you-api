@@ -7,7 +7,7 @@ const activitySchema = mongoose.Schema(
       required: true,
     },
     date: {
-      type: String,
+      type: Date,
       required: true,
     },
     activity_type: {
@@ -20,14 +20,6 @@ const activitySchema = mongoose.Schema(
     },
     price: {
       type: Number,
-      required: true,
-    },
-    title: {
-      type: String,
-      required: true,
-    },
-    image_path: {
-      type: String,
       required: true,
     },
   },
