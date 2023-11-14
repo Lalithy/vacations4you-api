@@ -1,7 +1,7 @@
 const Activity = require("../models/activityModel");
 const asyncHandler = require("express-async-handler");
 
-//create a activity
+//create an activity
 const createActivity = asyncHandler(async (req, res) => {
   try {
     const activity = await Activity.create(req.body);
@@ -126,4 +126,9 @@ const removeActivityById = asyncHandler(async (req, res) => {
 
 module.exports = {
   createActivity,
+  getAllActivity,
+  getActivityById,
+  getActivityBySearchCriteria,
+  updateActivityById,
+  removeActivityById
 };
