@@ -44,7 +44,7 @@ const getActivityById = asyncHandler(async (req, res) => {
 //search activity by filters
 const getActivityBySearchCriteria = asyncHandler(async (req, res) => {
   try {
-    const { destination, date, activity_type, rating, price } = req.body;
+    const { destination, date, activity_type, rating, minPrice, maxPrice } = req.body;
 
     let query = {};
 
@@ -64,8 +64,12 @@ const getActivityBySearchCriteria = asyncHandler(async (req, res) => {
       query.rating = { $regex: new RegExp(rating, 'i') };
     }
 
-    if (price) {
-      query.price = price;
+    if (minPrice && maxPrice) {
+      query.price = { $gte: parseFloat(minPrice), $lte: parseFloat(maxPrice) };
+    } else if (minPrice) {
+      query.price = { $gte: parseFloat(minPrice) };
+    } else if (maxPrice) {
+      query.price = { $lte: parseFloat(maxPrice) };
     }
 
     const activity = await Activity.find(query);
