@@ -84,7 +84,7 @@ const removeUserById = asyncHandler(async (req, res) => {
 // user signup
 const signup = asyncHandler(async (req, res) => {
   try {
-    const { name, status, email, password, user_role } = req.body;
+    const { name, email, password, user_role } = req.body;
 
     if (!(name && email && password && user_role)) {
       res.status(400).json({message: "Fields cannot be empty!"})
