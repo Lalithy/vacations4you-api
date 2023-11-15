@@ -1,10 +1,12 @@
 const express = require("express");
 const {
-  createActivityBooking,
+  createActivityBooking, getAllActivityBooking, getActivityBookingById,
 } = require("../controllers/activityBookingController");
 
 const router = express.Router();
 
-router.post("/save", createActivityBooking);
+router.get("/getAllActivityBooking", getAllActivityBooking);
+router.get("/getActivityBookingById:id", getActivityBookingById);
+router.post("/createActivityBooking", createActivityBooking);
 
 module.exports = router;

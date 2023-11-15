@@ -6,36 +6,74 @@ const packageBookingSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    package_id: {
-      type: Number,
+    customer_first_name: {
+      type: String,
       required: true,
     },
-    age: {
-      type: Number,
+    customer_last_name: {
+      type: String,
       required: true,
     },
-    price: {
-      type: Number,
+    customer_email: {
+      type: String,
+    },
+    customer_phone_no: {
+      type: String,
+      required: true,
+    },
+    card_number: {
+      type: String,
+      required: true,
+    },
+    expiry_date: {
+      type: String,
+      required: true,
+    },
+    cvv: {
+      type: String,
+      required: true,
+    },
+    name_on_card: {
+      type: String,
       required: true,
     },
     date: {
-      type: Date,
-      required: true,
-    },
-    customer_name:{
       type: String,
       required: true,
     },
-    customer_address:{
-      type: String,
-    },
-    customer_email:{
-      type: String,
-    },
-    customer_phone_no:{
-      type: String,
-      required: true,
-    }
+
+    number_of_booking: [
+      {
+        title: {
+          type: String,
+          required: true,
+        },
+        destination: {
+          type: String,
+          required: true,
+        },
+        duration: {
+          type: String,
+          required: true,
+        },
+        number_of_participants: {
+          type: Number,
+          required: true,
+        },
+        category: {
+          type: String,
+          required: true,
+        },
+        rating: {
+          type: Number,
+          required: true,
+        },
+        price: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
