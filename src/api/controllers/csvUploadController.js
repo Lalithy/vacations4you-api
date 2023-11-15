@@ -49,21 +49,6 @@ const uploadCruise = asyncHandler(async (req, res) => {
 });
 
 // Upload from csv activity data
-// const uploadActivity = asyncHandler(async (req, res) => {
-//   try {
-//     const jsonArray = await csvtojson().fromString(
-//       req.file.buffer.toString("utf8")
-//     );
-//     await UploadActivity.insertMany(jsonArray);
-//     res
-//       .status(200)
-//       .json({ message: "CSV activity data successfully uploaded" });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
-
 const uploadActivity = asyncHandler(async (req, res) => {
   try {
     const jsonArray = await csvtojson().fromString(
@@ -94,7 +79,9 @@ const uploadActivity = asyncHandler(async (req, res) => {
         .status(200)
         .json({ message: "CSV activity data successfully uploaded" });
     } else {
-      res.status(200).json({ message: "Not found new activity data to upload" });
+      res
+        .status(200)
+        .json({ message: "Not found new activity data to upload" });
     }
   } catch (error) {
     console.error(error);
@@ -103,19 +90,6 @@ const uploadActivity = asyncHandler(async (req, res) => {
 });
 
 // Upload from csv package data
-// const uploadPackage = asyncHandler(async (req, res) => {
-//   try {
-//     const jsonArray = await csvtojson().fromString(
-//       req.file.buffer.toString("utf8")
-//     );
-//     await UploadPackage.insertMany(jsonArray);
-//     res.status(200).json({ message: "CSV package data successfully uploaded" });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
-
 const uploadPackage = asyncHandler(async (req, res) => {
   try {
     const jsonArray = await csvtojson().fromString(
@@ -135,7 +109,8 @@ const uploadPackage = asyncHandler(async (req, res) => {
           existingItem.category === item.category &&
           Math.round(existingItem.rating) === Math.round(item.rating) &&
           Math.round(existingItem.duration) === Math.round(item.duration) &&
-          Math.round(existingItem.number_of_participants) === Math.round(item.number_of_participants) &&
+          Math.round(existingItem.number_of_participants) ===
+            Math.round(item.number_of_participants) &&
           Math.round(existingItem.price) === Math.round(item.price)
       );
     });
