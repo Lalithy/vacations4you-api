@@ -1,5 +1,5 @@
 const express = require("express");
-const { createActivity, getAllActivity, getActivityById, getActivityBySearchCriteria, updateActivityById, removeActivityById } = require("../controllers/activityController");
+const { createActivity, getAllActivity, getActivityById, getActivityBySearchCriteria, updateActivityById, removeActivityById, getDestinations, getActivityType } = require("../controllers/activityController");
 
 const router = express.Router();
 
@@ -9,5 +9,7 @@ router.get("/getActivityById:id", getActivityById);
 router.post("/getActivityBySearchCriteria", getActivityBySearchCriteria);
 router.put("/update/:id", updateActivityById);
 router.delete("/delete/:id", removeActivityById);
+router.get("/getDestinations", getDestinations);
+router.get("/getActivityType", getActivityType);
 
 module.exports = router;

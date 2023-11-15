@@ -6,40 +6,74 @@ const activityBookingSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    activity_id: {
-      type: Number,
+    customer_first_name: {
+      type: String,
       required: true,
     },
-    number_of_participants: {
-      type: Number,
+    customer_last_name: {
+      type: String,
       required: true,
     },
-    age: {
-      type: Number,
+    customer_email: {
+      type: String,
+    },
+    customer_phone_no: {
+      type: String,
       required: true,
     },
-    price: {
-      type: Number,
+    card_number: {
+      type: String,
+      required: true,
+    },
+    expiry_date: {
+      type: String,
+      required: true,
+    },
+    cvv: {
+      type: String,
+      required: true,
+    },
+    name_on_card: {
+      type: String,
       required: true,
     },
     date: {
-      type: Date,
-      required: true,
-    },
-    customer_name:{
       type: String,
       required: true,
     },
-    customer_address:{
-      type: String,
-    },
-    customer_email:{
-      type: String,
-    },
-    customer_phone_no:{
-      type: String,
-      required: true,
-    }
+    
+    number_of_booking: [
+      {
+        title: {
+          type: String,
+          required: true,
+        },
+        destination: {
+          type: String,
+          required: true,
+        },
+        activity_type: {
+          type: String,
+          required: true,
+        },
+        rating: {
+          type: String,
+          required: true,
+        },
+        price: {
+          type: Number,
+          required: true,
+        },
+        number_of_participants: {
+          type: Number,
+          required: true,
+        },
+        age: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
