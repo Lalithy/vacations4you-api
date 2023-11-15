@@ -2,12 +2,16 @@ const mongoose = require("mongoose");
 
 const packageSchema = mongoose.Schema(
   {
+    title: {
+      type: String,
+      required: true,
+    },
     destination: {
       type: String,
       required: true,
     },
     duration: {
-      type: Number,
+      type: String,
       required: true,
     },
     number_of_participants: {
@@ -24,6 +28,10 @@ const packageSchema = mongoose.Schema(
     },
     price: {
       type: Number,
+      required: true,
+    },
+    image_path: {
+      type: String,
       required: true,
     },
   },
