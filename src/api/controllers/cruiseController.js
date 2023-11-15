@@ -12,6 +12,29 @@ const getAllCruise = asyncHandler(async (req, res) => {
   }
 });
 
+//get Cruise Total
+
+const getCruiseTotalPrice = asyncHandler(async (req, res) => {
+  try {
+    const cruiseTotalPrice = await Cruise.aggregate([
+      {
+        $group: {
+          _id: null,
+          cruiseTotalPrice: { $sum: "$price" }
+        }
+      }
+    ]);
+
+    if (cruiseTotalPrice.length === 0) {
+      return res.status(404).json({ message: "No cruises found" });
+    }
+
+    res.status(200).json({ cruiseTotalPrice: cruiseTotalPrice[0].cruiseTotalPrice });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 //get a cruise by id
 const getCruiseById = asyncHandler(async (req, res) => {
   try {
@@ -118,11 +141,16 @@ const removeCruiseById = asyncHandler(async (req, res) => {
   }
 });
 
+
+
+
 module.exports = {
   getAllCruise,
+  getCruiseTotalPrice,
   getCruiseById,
   getCruiseBySearchCriteria,
   createCruise,
   updateCruiseById,
   removeCruiseById,
+
 };

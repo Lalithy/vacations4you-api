@@ -23,6 +23,29 @@ const getAllPackage = asyncHandler(async (req, res) => {
   }
 });
 
+
+//get Package Total
+const getPackageTotalPrice = asyncHandler(async (req, res) => {
+  try {
+    const packageTotalPrice = await Package.aggregate([
+      {
+        $group: {
+          _id: null,
+          packageTotalPrice: { $sum: "$price" }
+        }
+      }
+    ]);
+
+    if (packageTotalPrice.length === 0) {
+      return res.status(404).json({ message: "No Package Total" });
+    }
+
+    res.status(200).json({ packageTotalPrice: packageTotalPrice[0].packageTotalPrice });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 //get a package by id
 const getPackageById = asyncHandler(async (req, res) => {
   try {
@@ -155,6 +178,7 @@ const getCategory = asyncHandler(async (req, res) => {
 module.exports = {
   createPackage,
   getAllPackage,
+  getPackageTotalPrice,
   getPackageById,
   getPackageBySearchCriteria,
   updatePackageById,

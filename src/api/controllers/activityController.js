@@ -23,6 +23,29 @@ const getAllActivity = asyncHandler(async (req, res) => {
   }
 });
 
+//get Activity Total
+
+const getActivityTotalPrice = asyncHandler(async (req, res) => {
+  try {
+    const activityTotalPrice = await Activity.aggregate([
+      {
+        $group: {
+          _id: null,
+          activityTotalPrice: { $sum: "$price" }
+        }
+      }
+    ]);
+
+    if (activityTotalPrice.length === 0) {
+      return res.status(404).json({ message: "No Activity Total" });
+    }
+
+    res.status(200).json({ activityTotalPrice: activityTotalPrice[0].activityTotalPrice });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 //get an activity by id
 const getActivityById = asyncHandler(async (req, res) => {
   try {
@@ -151,6 +174,7 @@ const getActivityType = asyncHandler(async (req, res) => {
 module.exports = {
   createActivity,
   getAllActivity,
+  getActivityTotalPrice,
   getActivityById,
   getActivityBySearchCriteria,
   updateActivityById,
