@@ -105,10 +105,11 @@ const uploadPackage = asyncHandler(async (req, res) => {
     const newData = uniqueJsonArray.filter((item) => {
       return !existingData.some(
         (existingItem) =>
+          existingItem.title === item.title &&
           existingItem.destination === item.destination &&
           existingItem.category === item.category &&
-          Math.round(existingItem.rating) === Math.round(item.rating) &&
-          Math.round(existingItem.duration) === Math.round(item.duration) &&
+          existingItem.rating === item.rating &&
+          existingItem.duration === item.duration &&
           Math.round(existingItem.number_of_participants) ===
             Math.round(item.number_of_participants) &&
           Math.round(existingItem.price) === Math.round(item.price)
