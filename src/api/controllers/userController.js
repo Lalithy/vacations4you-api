@@ -36,7 +36,16 @@ const getUserById = asyncHandler(async (req, res) => {
 //create a user
 const createUser = asyncHandler(async (req, res) => {
   try {
-    const user = await User.create(req.body);
+    const { name, status, email, password, user_role } = req.body;
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const body = await User.create({
+      name,
+      status,
+      email,
+      password: hashedPassword,
+      user_role,
+    });
+    const user = await User.create(body);
     res.status(200).json(user);
   } catch (error) {
     res.status(500);
@@ -81,17 +90,38 @@ const removeUserById = asyncHandler(async (req, res) => {
   }
 });
 
+//password reset
+const resetUserpassword = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const body = { password: hashedPassword };
+    const user = await User.findByIdAndUpdate(id, body);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "Can not find any user by id " + id });
+    }
+
+    const updatedUser = await User.findById(id);
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500);
+    throw new Error(error.message);
+  }
+});
+
 // user signup
 const signup = asyncHandler(async (req, res) => {
   try {
     const { name, email, password, user_role } = req.body;
 
     if (!(name && email && password && user_role)) {
-      res.status(400).json({message: "Fields cannot be empty!"})
+      res.status(400).json({ message: "Fields cannot be empty!" });
     }
-    const existingUser = await User.findOne({email : email});
+    const existingUser = await User.findOne({ email: email });
     if (existingUser) {
-      return res.status(400).json({message: "User already exists!"})
+      return res.status(400).json({ message: "User already exists!" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -101,40 +131,42 @@ const signup = asyncHandler(async (req, res) => {
       status: true,
       email,
       password: hashedPassword,
-      user_role
+      user_role,
     });
 
-    const token = jwt.sign({email: result.email, id: result._id}, SECRET_KEY);
-    res.status(201).json({user: result, token, token});
-  }
-  catch(error) {
+    const token = jwt.sign({ email: result.email, id: result._id }, SECRET_KEY);
+    res.status(201).json({ user: result, token, token });
+  } catch (error) {
     console.log(error);
-    res.status(500).json({message: "Something went wrong!"});
+    res.status(500).json({ message: "Something went wrong!" });
   }
 });
 
 // user login
 const login = asyncHandler(async (req, res) => {
   try {
-    const {email, password} = req.body;
+    const { email, password } = req.body;
 
     if (!(email && password)) {
-      res.status(400).json({message: "Email and Password are required "});
+      res.status(400).json({ message: "Email and Password are required " });
     }
 
-    const existingUser = await User.findOne({email: email});
-    if(!existingUser) {
-      return res.status(404).json({message: "User not found"});
+    const existingUser = await User.findOne({ email: email });
+    if (!existingUser) {
+      return res.status(404).json({ message: "User not found" });
     }
 
     const matchPassword = await bcrypt.compare(password, existingUser.password);
 
-    if(!matchPassword) {
-      return res.status(400).json({message: "Invalid Credentials"});
+    if (!matchPassword) {
+      return res.status(400).json({ message: "Invalid Credentials" });
     }
 
     if (existingUser && matchPassword) {
-      const token = jwt.sign({email: existingUser.email, id: existingUser._id}, SECRET_KEY)
+      const token = jwt.sign(
+        { email: existingUser.email, id: existingUser._id },
+        SECRET_KEY
+      );
       const options = {
         expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
         httpOnly: true,
@@ -142,13 +174,12 @@ const login = asyncHandler(async (req, res) => {
       res.status(200).cookie("token", token, options).json({
         success: true,
         token,
-        existingUser
-      })
-    };
-  }
-  catch(error) {
+        existingUser,
+      });
+    }
+  } catch (error) {
     console.log(error);
-    res.status(500).json({message: "Something went wrong!"});
+    res.status(500).json({ message: "Something went wrong!" });
   }
 });
 
@@ -158,6 +189,7 @@ module.exports = {
   createUser,
   updateUserById,
   removeUserById,
+  resetUserpassword,
   signup,
-  login
+  login,
 };
