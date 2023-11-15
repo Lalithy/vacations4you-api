@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const packageBookingSchema = mongoose.Schema(
   {
     user_id: {
-      type: Number,
+      type: Object,
       required: true,
     },
     customer_first_name: {

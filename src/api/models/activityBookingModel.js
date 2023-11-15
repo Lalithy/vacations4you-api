@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const activityBookingSchema = mongoose.Schema(
   {
     user_id: {
-      type: Number,
+      type: Object,
       required: true,
     },
     customer_first_name: {
@@ -18,6 +18,14 @@ const activityBookingSchema = mongoose.Schema(
       type: String,
     },
     customer_phone_no: {
+      type: String,
+      required: true,
+    },
+    number_of_participants: {
+      type: Number,
+      required: true,
+    },
+    age: {
       type: String,
       required: true,
     },
@@ -56,19 +64,7 @@ const activityBookingSchema = mongoose.Schema(
           type: String,
           required: true,
         },
-        rating: {
-          type: String,
-          required: true,
-        },
         price: {
-          type: Number,
-          required: true,
-        },
-        number_of_participants: {
-          type: Number,
-          required: true,
-        },
-        age: {
           type: Number,
           required: true,
         },
