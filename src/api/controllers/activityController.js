@@ -124,11 +124,37 @@ const removeActivityById = asyncHandler(async (req, res) => {
   }
 });
 
+// Get destinations
+const getDestinations = asyncHandler(async (req, res) => {
+  try {
+    const destinations = await Activity.distinct('destination');
+
+    res.status(200).json({ destinations });
+  } catch (error) {
+    res.status(500);
+    throw new Error(error.message);
+  }
+});
+
+// Get activity type
+const getActivityType = asyncHandler(async (req, res) => {
+  try {
+    const activityType = await Activity.distinct('activity_type');
+
+    res.status(200).json({ activityType });
+  } catch (error) {
+    res.status(500);
+    throw new Error(error.message);
+  }
+});
+
 module.exports = {
   createActivity,
   getAllActivity,
   getActivityById,
   getActivityBySearchCriteria,
   updateActivityById,
-  removeActivityById
+  removeActivityById,
+  getDestinations,
+  getActivityType
 };
