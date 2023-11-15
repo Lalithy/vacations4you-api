@@ -23,7 +23,7 @@ const packageSchema = mongoose.Schema(
       required: true,
     },
     rating: {
-      type: Number,
+      type: String,
       required: true,
     },
     price: {
